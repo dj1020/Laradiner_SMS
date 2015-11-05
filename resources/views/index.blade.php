@@ -20,12 +20,13 @@
 <div class="container col-md-4 col-md-offset-4">
 
     <form class="form-sms" action="/sms" method="POST">
+        {{ csrf_field() }}
         <h2 class="form-sms-heading">Send SMS</h2>
         <label for="inputPhone" class="sr-only">Phone Number</label>
-        <input type="text" id="inputPhone" class="form-control"
+        <input type="text" id="inputPhone" class="form-control" name="phone"
                placeholder="Cell Phone #, ex: 0955997887" required autofocus>
         <label for="inputMessage" class="sr-only">Message</label>
-        <input type="text" id="inputMessage" class="form-control"
+        <input type="text" id="inputMessage" class="form-control" name="message"
                placeholder="Enter your message" required>
         <label for="platform">Select Platform:</label>
         <select name="platform" id="platform">
