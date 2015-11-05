@@ -28,8 +28,6 @@ class SmsController extends Controller
      */
     public function send(Request $request)
     {
-        var_dump("Firing");
-
-        return event(new SendSMSEvent($request));
+        event(new SendSMSEvent($request->only('phone', 'message', 'platform')));
     }
 }
