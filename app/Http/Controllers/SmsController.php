@@ -28,6 +28,9 @@ class SmsController extends Controller
      */
     public function send(Request $request)
     {
-        event(new SendSMSEvent($request->only('phone', 'message', 'platform')));
+        $data = $request->except('_token');
+//        $data['user']['id'] = \App\User::first()->id;
+
+        event(new SendSMSEvent($data));
     }
 }

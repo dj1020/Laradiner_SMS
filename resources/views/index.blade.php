@@ -28,12 +28,12 @@
         <label for="inputMessage" class="sr-only">Message</label>
         <input type="text" id="inputMessage" class="form-control" name="message"
                placeholder="Enter your message" required>
-        <label for="platform">Select Platform:</label>
-        <select name="platform" id="platform">
-            <option value="p1">p1</option>
-            <option value="p2">p2</option>
-            <option value="p3">p3</option>
-        </select>
+        {{--<label for="platform">Select Platform:</label>--}}
+        {{--<select name="platform" id="platform">--}}
+            {{--<option value="p1">p1</option>--}}
+            {{--<option value="p2">p2</option>--}}
+            {{--<option value="p3">p3</option>--}}
+        {{--</select>--}}
         <br/>
         <br/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
