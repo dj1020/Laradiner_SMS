@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SendSMS implements ShouldQueue
 {
     use InteractsWithQueue;
+    private $apiKey = "adfzcvkpioadf";
 
     /**
      * Create the event handler.
@@ -30,8 +31,6 @@ class SendSMS implements ShouldQueue
     {
         var_dump("Fired SendSMS event handler");
         $data = $event->getData();
-
-        dd($event->getData());
 
         $mitake = new Mitake_SMS($this->apiKey);
 
