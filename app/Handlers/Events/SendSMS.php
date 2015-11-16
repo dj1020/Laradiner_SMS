@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SendSMS implements ShouldQueue
 {
     use InteractsWithQueue;
-    private $apiKey = "adfzcvkpioadf";
+    private $apiKey = "some_random_string_here_adfqweradf";
 
     /**
      * Create the event handler.

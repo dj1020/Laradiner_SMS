@@ -21,6 +21,6 @@ class Mitake_SMS
 
     public function sendTextMessage($params)
     {
-        dd($params);
+        var_dump($params);
     }
 }
