@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendSMSEvent;
+use Event;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,6 +32,10 @@ class SmsController extends Controller
         $data = $request->except('_token');
         $data['user']['id'] = \App\User::first()->id;
 
-        event(new SendSMSEvent($data));
+        // 這裡和 Laravel 的 Event 系統綁太緊，變成要送簡訊一定要 fire a event
+        Event::fire(new SendSMSEvent($data));
+
+        // 挑戰：如果我不想使用 Event 系統來發簡訊的話怎麼辦？
+
     }
 }
