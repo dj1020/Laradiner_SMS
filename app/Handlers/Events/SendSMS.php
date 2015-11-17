@@ -37,7 +37,7 @@ class SendSMS implements ShouldQueue
         // 必需要修改程式碼才能換平台，而且無法使用 Mock 做測試。
         $mitake = new Mitake_SMS($this->apiKey);
 
-        // 挑戰 1：有沒有什麼寫法是可以換簡訊平台卻不需要修改已經寫好的 Production Code？
+        // 挑戰 1：有沒有什麼寫法是可以換簡訊平台卻不需要修改這一段已經寫好的 Production Code？
         // 挑戰 2：在修改最少的情況下，讓這個 Mitake_SMS 類別可以被 Mock 取代，進而測試 handle 方法。
 
         $mitake->sendTextMessage([
@@ -53,5 +53,7 @@ class SendSMS implements ShouldQueue
             'to'      => $data['phone'],
             'message' => $data['message'],
         ]);
+
+        // 挑戰 3：如何在不觸及資料庫操作的前提下，寫測試驗證 handle 方法內的處理邏輯？
     }
 }
