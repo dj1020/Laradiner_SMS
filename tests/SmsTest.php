@@ -3,6 +3,8 @@
 use App\Events\SendSMSEvent;
 use App\Handlers\Events\SendSMS;
 use App\Sms\Mitake_SMS;
+use App\User;
+use App\UserRepository;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -32,8 +34,20 @@ class SmsTest extends TestCase
         $event->shouldReceive('getCourier')->andReturn($courier);
         $event->shouldReceive('getData')->andReturn($data);
 
+
+        $users = Mockery::mock(UserRepository::class);
+        $stubUser = Mockery::mock(User::class);
+        $relation = Mockery::mock('stdClass');
+
+        $users->shouldReceive('find')->andReturn($stubUser);
+        $stubUser->shouldReceive('messages')->once()->andReturn($relation);
+        $relation->shouldReceive('create')->once()->with([
+            'to' => $data['phone'],
+            'message' => $data['message'],
+        ]);
+
         // Act & Assert
-        (new SendSMS())->handle($event);
+        (new SendSMS($users))->handle($event);
     }
 
 }
