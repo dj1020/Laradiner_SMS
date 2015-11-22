@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SendSMS implements ShouldQueue
 {
     use InteractsWithQueue;
-    private $apiKey = "some_random_string_here_adfqweradf";
 
     /**
      * Create the event handler.
@@ -33,14 +32,13 @@ class SendSMS implements ShouldQueue
         var_dump("Fired SendSMS event handler");
         $data = $event->getData();
 
-        // 這裡被 new 綁死了，如果要使用另一個簡訊平台發簡訊的話，
-        // 必需要修改程式碼才能換平台，而且無法使用 Mock 做測試。
-        $mitake = new Mitake_SMS($this->apiKey);
-
         // 挑戰 1：有沒有什麼寫法是可以換簡訊平台卻不需要修改這一段已經寫好的 Production Code？
+        // Solution 1:
+        $courier = $event->getCourier();
+
         // 挑戰 2：在修改最少的情況下，讓這個 Mitake_SMS 類別可以被 Mock 取代，進而測試 handle 方法。
 
-        $mitake->sendTextMessage([
+        $courier->sendTextMessage([
             'to'      => $data['phone'],
             'message' => $data['message'],
         ]);

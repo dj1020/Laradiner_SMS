@@ -21,6 +21,7 @@ class Mitake_SMS
 
     public function sendTextMessage($params)
     {
+        var_dump("Sending SMS by Mitake Platform");
         var_dump($params);
     }
 }
