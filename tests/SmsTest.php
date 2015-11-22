@@ -25,28 +25,23 @@ class SmsTest extends TestCase
             'message' => 'test message here...'
         ];
 
-        $courier = Mockery::mock(SmsCourierInterface::class);
-        $courier->shouldReceive('sendTextMessage')->once()->with([
-            'to'      => $data['phone'],
-            'message' => $data['message']
-        ]);
-
-        $event = Mockery::mock(SendSMSEvent::class);
-        $event->shouldReceive('getData')->andReturn($data);
-
-        $users = Mockery::mock(UserRepository::class);
-        $stubUser = Mockery::mock(User::class);
+        $user = Mockery::mock('\App\User[sms]'); // partial mock
         $relation = Mockery::mock('stdClass');
+        $courier = Mockery::mock(SmsCourierInterface::class);
 
-        $users->shouldReceive('find')->andReturn($stubUser);
-        $stubUser->shouldReceive('messages')->once()->andReturn($relation);
+        $user->shouldReceive('sms')->once()->andReturn($relation);
         $relation->shouldReceive('create')->once()->with([
             'to' => $data['phone'],
             'message' => $data['message'],
         ]);
 
+        $courier->shouldReceive('sendTextMessage')->once()->with([
+            'to'      => $data['phone'],
+            'message' => $data['message']
+        ]);
+
         // Act & Assert
-        (new SendSMS($users, $courier))->handle($event);
+        $user->sendSms($courier, $data['message'], $data['phone']);
     }
 
 }
