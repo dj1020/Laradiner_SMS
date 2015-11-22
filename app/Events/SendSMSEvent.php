@@ -18,20 +18,14 @@ class SendSMSEvent extends Event
      *
      * @return void
      */
-    public function __construct(array $data, $courier)
+    public function __construct(array $data)
     {
         $this->data = $data;
-        $this->courier = $courier;
     }
 
     public function getData()
     {
         return $this->data;
-    }
-
-    public function getCourier()
-    {
-        return $this->courier;
     }
 
     /**
