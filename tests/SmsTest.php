@@ -3,6 +3,7 @@
 use App\Events\SendSMSEvent;
 use App\Handlers\Events\SendSMS;
 use App\Sms\Mitake_SMS;
+use App\Sms\SmsCourierInterface;
 use App\User;
 use App\UserRepository;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -24,16 +25,14 @@ class SmsTest extends TestCase
             'message' => 'test message here...'
         ];
 
-        $courier = Mockery::mock(Mitake_SMS::class);
+        $courier = Mockery::mock(SmsCourierInterface::class);
         $courier->shouldReceive('sendTextMessage')->once()->with([
             'to'      => $data['phone'],
             'message' => $data['message']
         ]);
 
         $event = Mockery::mock(SendSMSEvent::class);
-        $event->shouldReceive('getCourier')->andReturn($courier);
         $event->shouldReceive('getData')->andReturn($data);
-
 
         $users = Mockery::mock(UserRepository::class);
         $stubUser = Mockery::mock(User::class);
@@ -47,7 +46,7 @@ class SmsTest extends TestCase
         ]);
 
         // Act & Assert
-        (new SendSMS($users))->handle($event);
+        (new SendSMS($users, $courier))->handle($event);
     }
 
 }

@@ -39,6 +39,8 @@ class SmsController extends Controller
         Event::fire(new SendSMSEvent($data, new Mitake_SMS($this->apiKey)));
 
         // 挑戰 4：如果我不想使用 Event 系統來發簡訊的話怎麼辦？
+        // Solution: 關注點分離，解耦合，Decoupling Handler，把傳 SMS 的
+        //           處理程序移到別的 class 裡，做為獨立的 service。
 
     }
 }
