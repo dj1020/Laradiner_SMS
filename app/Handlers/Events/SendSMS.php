@@ -37,6 +37,7 @@ class SendSMS implements ShouldQueue
         $courier = $event->getCourier();
 
         // 挑戰 2：在修改最少的情況下，讓這個 Mitake_SMS 類別可以被 Mock 取代，進而測試 handle 方法。
+        // Solution: See tests/SmsTest.php
 
         $courier->sendTextMessage([
             'to'      => $data['phone'],
